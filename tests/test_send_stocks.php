@@ -1,15 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../src/Mocks/WbMock.php';
 require_once __DIR__ . '/../src/Api/Stocks.php';
+require_once __DIR__ . '/../src/Mocks/WbMock.php';
 
 use WbIntegration\Api\Stocks;
+use WbIntegration\Mocks\WbMock;
 
-$stocks = new Stocks();
-$result = $stocks->send();
+$config = require __DIR__ . '/../config.php';
+$token = $config['wb_token'];
+
+$stocksApi = new Stocks($token);
+$response = $stocksApi->sendStocks();
 
 echo "<pre>";
-print_r(array_slice($result, 0, 5)); // Показываем только первые 5
+print_r($response);
 echo "</pre>";
-
-echo "Остатки переданы по " . count($result) . " товарам.\n";
